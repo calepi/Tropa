@@ -33,7 +33,6 @@ export default function App() {
   const sigCanvas = useRef<SignatureCanvas>(null);
   
   const [idDocument, setIdDocument] = useState<string | null>(null);
-  const [logoImage, setLogoImage] = useState<string | null>(null);
   
   const [isLoadingCep, setIsLoadingCep] = useState(false);
 
@@ -184,9 +183,18 @@ export default function App() {
     const doc = new jsPDF();
     
     // --- Logo ---
-    if (logoImage) {
+    const logoElement = document.getElementById('fixed-logo') as HTMLImageElement;
+    if (logoElement && logoElement.complete && logoElement.naturalWidth > 0 && logoElement.style.display !== 'none') {
       try {
-        doc.addImage(logoImage, 'PNG', 85, 15, 40, 40);
+        const canvas = document.createElement('canvas');
+        canvas.width = logoElement.naturalWidth;
+        canvas.height = logoElement.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(logoElement, 0, 0);
+          const imgData = canvas.toDataURL('image/png');
+          doc.addImage(imgData, 'PNG', 85, 15, 40, 40);
+        }
       } catch (e) {
         console.error("Error adding logo image to PDF", e);
       }
@@ -389,25 +397,16 @@ export default function App() {
         
         <div className="text-center mb-10 relative">
           <div className="flex flex-col items-center justify-center mb-6">
-            {logoImage ? (
-              <div className="relative group">
-                <img src={logoImage} alt="Logo" className="h-24 object-contain" />
-                <button 
-                  onClick={() => setLogoImage(null)}
-                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ) : (
-              <label className="cursor-pointer group flex flex-col items-center">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gray-100 text-gray-400 mb-2 shadow-inner border-2 border-dashed border-gray-300 group-hover:border-black group-hover:text-black transition-colors">
-                  <ImageIcon size={32} />
-                </div>
-                <span className="text-xs font-bold text-gray-500 group-hover:text-black uppercase tracking-wider">Adicionar Logo</span>
-                <input type="file" accept="image/png, image/jpeg" className="hidden" onChange={(e) => handleImageUpload(e, setLogoImage)} />
-              </label>
-            )}
+            <img 
+              id="fixed-logo" 
+              src="/logo.png" 
+              alt="Logo Tropa Vascaína" 
+              crossOrigin="anonymous"
+              className="h-28 object-contain drop-shadow-md" 
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
           </div>
 
           <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight uppercase">Cadastro de Sócio</h1>
