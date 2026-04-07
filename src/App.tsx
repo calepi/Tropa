@@ -271,18 +271,18 @@ export default function App() {
     let y = 98;
     drawField('NOME COMPLETO:', formData.nome.toUpperCase(), 20, y, 170);
     
-    y += 12;
+    y += 10;
     drawField('IDENTIDADE Nº:', formData.identidade, 20, y, 80);
     drawField('ÓRGÃO EXPEDIDOR:', formData.orgaoExpedidor.toUpperCase(), 105, y, 85);
     
-    y += 12;
+    y += 10;
     drawField('CPF Nº:', formData.cpf, 20, y, 170);
     
-    y += 12;
+    y += 10;
     const filiacaoCombinada = [formData.nomeMae, formData.nomePai].filter(Boolean).join(' E ').toUpperCase();
     drawField('FILIAÇÃO:', filiacaoCombinada, 20, y, 170);
     
-    y += 12;
+    y += 10;
     let formattedDate = formData.dataNascimento;
     if (formattedDate) {
       const [year, month, day] = formattedDate.split('-');
@@ -293,31 +293,31 @@ export default function App() {
     drawField('DATA DE NASCIMENTO:', formattedDate, 20, y, 80);
     drawField('NATURALIDADE:', formData.naturalidade.toUpperCase(), 105, y, 85);
     
-    y += 12;
+    y += 10;
     drawField('NACIONALIDADE:', formData.nacionalidade.toUpperCase(), 20, y, 80);
     drawField('PROFISSÃO:', formData.profissao.toUpperCase(), 105, y, 85);
     
-    y += 12;
+    y += 10;
     drawField('CEP:', formData.cep, 20, y, 50);
     drawField('ENDEREÇO:', formData.endereco.toUpperCase(), 75, y, 115);
     
-    y += 12;
+    y += 10;
     drawField('NÚMERO:', formData.numero, 20, y, 40);
     drawField('COMPLEMENTO:', formData.complemento.toUpperCase(), 65, y, 125);
     
-    y += 12;
+    y += 10;
     drawField('BAIRRO:', formData.bairro.toUpperCase(), 20, y, 80);
     drawField('CIDADE:', formData.cidade.toUpperCase(), 105, y, 85);
     
-    y += 12;
+    y += 10;
     drawField('ESTADO:', formData.estado.toUpperCase(), 20, y, 80);
     drawField('TELEFONE:', formData.telefone, 105, y, 85);
     
-    y += 12;
+    y += 10;
     drawField('E-MAIL:', formData.email.toLowerCase(), 20, y, 170);
 
     // --- Signature ---
-    y += 45;
+    y += 35;
     
     doc.setDrawColor(0);
     doc.setLineWidth(0.5);
@@ -341,7 +341,7 @@ export default function App() {
     }
 
     // --- Footer ---
-    y += 35;
+    y += 25;
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.text('USO EXCLUSIVO DA DIRETORIA', 105, y, { align: 'center' });
